@@ -1,0 +1,22 @@
+[Unit]
+Description=ADB Auto-Reconnect Service
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/smarttv/adb-autoreconnect.sh
+Restart=always
+RestartSec=5
+
+# Seguridad
+NoNewPrivileges=yes
+PrivateTmp=yes
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=adb-autoreconnect
+
+[Install]
+WantedBy=multi-user.target

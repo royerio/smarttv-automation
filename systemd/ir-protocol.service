@@ -1,0 +1,23 @@
+[Unit]
+Description=Configure IR Protocol (NEC)
+After=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/smarttv/ir-protocol-check.sh
+RemainAfterExit=yes
+
+# Debe ejecutarse como root
+User=root
+
+# Seguridad
+PrivateTmp=yes
+NoNewPrivileges=yes
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=ir-protocol
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,19 @@
+# Logs
+*.log
+/logs/
+/var/log/
+
+# Archivos temporales
+*.tmp
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Archivos de configuración local
+local.conf
+override.conf
+
+# Directorios del sistema
+.systemd/
+.cache/

@@ -1,0 +1,26 @@
+[Unit]
+Description=IR Remote Listener Service
+After=network-online.target ir-protocol.service
+Requires=ir-protocol.service
+Wants=adb-autoreconnect.service
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/smarttv/ir-listener.sh
+Restart=always
+RestartSec=5
+
+# Debe ejecutarse como root (por acceso a /dev/input/event0)
+User=root
+
+# Seguridad
+NoNewPrivileges=yes
+PrivateTmp=yes
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=ir-listener
+
+[Install]
+WantedBy=multi-user.target
