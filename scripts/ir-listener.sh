@@ -10,7 +10,7 @@ source "$COMMON_FUNCTIONS" || exit 1
 trap cleanup EXIT
 
 # Verificar dependencias
-check_dependencies evtest || exit 1
+# check_dependencies evtest || exit 1
 
 log_info "=== Iniciando IR Remote Listener ==="
 log_info "Dispositivo: $IR_DEVICE"
@@ -60,10 +60,16 @@ handle_ok_press() {
 main_loop() {
     # Ejecutar evtest con timeout para evitar cuelgues permanentes
     run_with_timeout "$EVTEST_TIMEOUT" \
-        "evtest '$IR_DEVICE' 2>/dev/null" | while read -r line; do
+        "/usr/bin/evtest '$IR_DEVICE' 2>/dev/null" | while read -r line; do
         
-        # Buscar pulsación de tecla OK (código NEC: 0x200815, su valor decimal 2099221, o KEY_OK)
-        if echo "$line" | grep -qiE "MSC_SCAN.*(200815|0x200815|2099221)|KEY_OK"; then
+        # Buscar pulsación de tecla OK (código NEC: 0x200815, su valor decimal 2099221)
+        if echo "$line" | grep -qi "MSC_SCAN.*200815"; then
+            handle_ok_press
+        fi
+        if echo "$line" | grep -qi "MSC_SCAN.*0x200815"; then
+            handle_ok_press
+        fi
+        if echo "$line" | grep -qi "MSC_SCAN.*2099221"; then
             handle_ok_press
         fi
     done
