@@ -62,8 +62,8 @@ main_loop() {
     run_with_timeout "$EVTEST_TIMEOUT" \
         "evtest '$IR_DEVICE' 2>/dev/null" | while read -r line; do
         
-        # Buscar pulsación de tecla OK (código NEC: 0x200815)
-        if echo "$line" | grep -qi "MSC_SCAN.*200815"; then
+        # Buscar pulsación de tecla OK (código NEC: 0x200815, su valor decimal 2099221, o KEY_OK)
+        if echo "$line" | grep -qiE "MSC_SCAN.*(200815|0x200815|2099221)|KEY_OK"; then
             handle_ok_press
         fi
     done
