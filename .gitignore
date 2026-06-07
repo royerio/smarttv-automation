@@ -17,3 +17,4 @@ override.conf
 # Directorios del sistema
 .systemd/
 .cache/
+.vscode/

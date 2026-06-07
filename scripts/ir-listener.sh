@@ -63,13 +63,7 @@ main_loop() {
         "/usr/bin/evtest '$IR_DEVICE' 2>/dev/null" | while read -r line; do
         
         # Buscar pulsación de tecla OK (código NEC: 0x200815, su valor decimal 2099221)
-        if echo "$line" | grep -qi "MSC_SCAN.*200815"; then
-            handle_ok_press
-        fi
-        if echo "$line" | grep -qi "MSC_SCAN.*0x200815"; then
-            handle_ok_press
-        fi
-        if echo "$line" | grep -qi "MSC_SCAN.*2099221"; then
+        if echo "$line" | grep -qi "MSC_SCAN.*200815" || echo "$line" | grep -qi "MSC_SCAN.*0x200815" || echo "$line" | grep -qi "MSC_SCAN.*2099221"; then
             handle_ok_press
         fi
     done
